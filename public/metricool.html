@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programar A/B · Ajolo Publicador</title>
+<style>
+:root{
+  --bg:#f6f5f2; --card:#ffffff; --ink:#1d1d1b; --muted:#6b6a66; --line:#e3e1dc;
+  --accent:#d6457a; --accent-ink:#fff; --ok:#1f8a4c; --warn:#b26a00; --err:#c0392b; --run:#2f6fd6;
+  --chip:#efedea; --track:#e9e7e2; --a:#8a4fd1; --b:#1f8a8a;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#151514; --card:#1f1f1d; --ink:#f0eee9; --muted:#a3a19b; --line:#33322f;
+  --accent:#f06a9b; --accent-ink:#1a0b11; --ok:#4cc27f; --warn:#e3a33b; --err:#ff6b5e; --run:#6aa1ff;
+  --chip:#2a2a27; --track:#2c2c29; --a:#b58cf0; --b:#4cc2c2; color-scheme:dark;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:24px 20px 80px}
+header.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
+h1{font-size:22px;margin:0;letter-spacing:-.01em}
+h1 small{display:block;font-size:13px;font-weight:400;color:var(--muted)}
+h2{font-size:16px;margin:0 0 12px}
+nav.tabs{display:flex;gap:4px;background:var(--chip);padding:3px;border-radius:10px;flex-wrap:wrap}
+nav.tabs a{padding:5px 12px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14px}
+nav.tabs a.on{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+button,select,input{font:inherit;color:var(--ink)}
+button{cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);padding:7px 14px}
+button:hover{border-color:var(--muted)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+button.sm{font-size:12px;padding:3px 9px}
+button:disabled{opacity:.45;cursor:default}
+select,input[type=date],input[type=time]{padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:var(--card)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
+.hint{font-size:13px;color:var(--muted);margin:8px 0 0}
+a{color:var(--accent)}
+.pill{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--chip);white-space:nowrap}
+.pill.ok{color:var(--ok)} .pill.warn{color:var(--warn)} .pill.err{color:var(--err)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field>label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.redes{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center;font-size:14px}
+.seg{display:inline-flex;background:var(--chip);border-radius:8px;padding:2px}
+.seg button{border:0;background:transparent;padding:3px 10px;font-size:13px;border-radius:6px;color:var(--muted)}
+.seg button.on{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.dias button{font-size:13px;padding:4px 10px;border-radius:999px}
+.dias button.on{background:var(--a);border-color:var(--a);color:#fff}
+.hora{display:inline-flex;align-items:center;gap:2px;background:var(--chip);border-radius:8px;padding:2px 2px 2px 6px}
+.hora input{border:0;background:transparent;padding:3px}
+.hora button{border:0;background:transparent;padding:2px 6px;color:var(--muted)}
+.avisos{margin:0 0 12px;padding:10px 14px;border-radius:10px;background:color-mix(in srgb,var(--warn) 12%,transparent);color:var(--warn);font-size:13px}
+.avisos p{margin:2px 0}
+.dia{border:1px solid var(--line);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.dia h3{margin:0;font-size:14px;padding:8px 12px;background:var(--bg);display:flex;justify-content:space-between;gap:10px}
+.dia h3 span{font-weight:400;color:var(--muted);font-size:12px}
+.pub{display:grid;grid-template-columns:52px 26px minmax(0,1fr);gap:4px 10px;padding:8px 12px;border-top:1px solid var(--line);font-size:14px;align-items:start}
+.pub:first-of-type{border-top:0}
+.pub .t{font-variant-numeric:tabular-nums;color:var(--muted)}
+.pub .txt{grid-column:3;font-size:12px;color:var(--muted);white-space:pre-line}
+.v{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;font-size:12px;font-weight:700;color:#fff}
+.v.A{background:var(--a)} .v.B{background:var(--b)}
+.red{font-size:11px;padding:1px 7px;border-radius:999px;background:var(--chip);color:var(--muted);margin-right:4px;white-space:nowrap;display:inline-block;margin-top:2px}
+.red.pub-ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.filters button{font-size:13px;padding:4px 10px;border-radius:999px}
+.filters button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.vid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;padding:10px 0;border-top:1px solid var(--line)}
+.vid:first-child{border-top:0}
+.vid .n{font-weight:600}
+.vid .n small{font-weight:400;color:var(--muted);margin-left:6px}
+.vid .st{grid-column:1/-1;display:grid;grid-template-columns:26px minmax(0,1fr);gap:4px 8px;font-size:13px;align-items:start}
+.lote{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 0;border-top:1px solid var(--line);font-size:14px}
+.lote:first-of-type{border-top:0}
+.bar{height:8px;background:var(--track);border-radius:999px;overflow:hidden;margin-top:10px}
+.bar>i{display:block;height:100%;background:var(--run);transition:width .4s}
+.empty{padding:20px;text-align:center;color:var(--muted)}
+.cal{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+.cal th,.cal td{border:1px solid var(--line);padding:4px 5px;vertical-align:top;text-align:left}
+.cal th{background:var(--bg);font-weight:600;font-size:12px}
+.cal td.d{white-space:nowrap;font-weight:600;width:92px}
+.cal .it{display:flex;gap:4px;align-items:center;line-height:1.25;padding:1px 0;cursor:default}
+.cal .it .t{color:var(--muted);font-variant-numeric:tabular-nums}
+.cal .it .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cal .v{width:16px;height:16px;font-size:10px;border-radius:4px;flex:none}
+.scroll{overflow-x:auto}
+.nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav b{font-size:14px;min-width:190px;text-align:center}
+.cal .it.e-prog{opacity:.75} .cal .it.e-pub{opacity:.45}
+.cal .it.e-nuevo .nm{font-weight:600}
+.cal td.hoy{background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.cal td.vacio{color:var(--muted)}
+.ley{font-size:12px;color:var(--muted);margin:8px 0 0}
+.tab tr.e-pub td{opacity:.5}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:12px 0}
+.kpi{background:var(--bg);border-radius:10px;padding:10px 12px}
+.kpi b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12px;color:var(--muted)}
+.rep h3{font-size:14px;margin:16px 0 6px}
+.tab td.n,.tab th.n{text-align:right;font-variant-numeric:tabular-nums}
+.leyenda{margin:14px 0 0;padding:10px 14px;border-radius:10px;background:var(--bg);font-size:13px}
+.leyenda p{margin:2px 0} .leyenda b{font-weight:600}
+.tab tr.tot td{font-weight:700;border-top:2px solid var(--line)}
+@media print{
+  body{background:#fff;color:#000} .wrap{max-width:none;padding:0}
+  body.imprimir .wrap>*:not(#reporte){display:none!important}
+  #reporte{border:0;padding:0} #reporte .noprint{display:none!important}
+  .tab td.x{max-width:none}
+}
+.tab{width:100%;border-collapse:collapse;font-size:13px}
+.tab th,.tab td{padding:4px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.tab th{position:sticky;top:0;background:var(--card);font-size:12px;color:var(--muted)}
+.tab td.x{white-space:normal;color:var(--muted);font-size:12px;max-width:380px;overflow:hidden;text-overflow:ellipsis}
+.tab tr.nd td{border-top:2px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Ajolo Publicador<small>Programar la carpeta <b>salida</b> (A/B) en Metricool</small></h1>
+    <nav class="tabs"><a href="/">Publicar en redes</a><a href="/drive">Subir a Drive</a><a href="/metricool" class="on">Programar A/B</a></nav>
+  </header>
+
+  <section class="panel" id="estado"></section>
+  <section class="panel" id="config"></section>
+  <section class="panel" id="plan"></section>
+  <section class="panel" id="reporte"></section>
+  <section class="panel" id="lotes"></section>
+  <section class="panel" id="videos"></section>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+// resumen de horas de un lote: lotes viejos guardan una lista, los nuevos un objeto por red
+const horasLote = c => { const hs = c.horas; if (Array.isArray(hs)) return 'horas ' + hs.join(', ');
+  const activas = Object.entries(c.redes || {}).filter(([, g]) => g > 0).map(([r]) => r);
+  return activas.length ? activas.join(', ') + ' · ' + (c.porDia || '') + ' al día' : ''; };
+// pone hijos aplanando listas anidadas y saltando null/false
+const pon = (el, ...k) => el.replaceChildren(...k.flat(Infinity).filter(x => x != null && x !== false).map(x => x.nodeType ? x : document.createTextNode(x)));
+const h = (tag, attrs={}, ...kids) => { const e=document.createElement(tag); for (const [k,v] of Object.entries(attrs)) { if (k==='class') e.className=v; else if (k==='style') e.style.cssText=v; else if (k.startsWith('on')) e.addEventListener(k.slice(2),v); else if (v!==false && v!=null) e.setAttribute(k, v===true?'':v); } for (const k of kids.flat(Infinity)) if (k!=null && k!==false) e.append(k.nodeType?k:document.createTextNode(k)); return e; };
+const post = async (url, body) => { const r = await fetch(url,{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body||{})}); const j = await r.json().catch(()=>({})); if (!r.ok) throw new Error(j.error||r.statusText); return j; };
+const NOM = { instagram:'Instagram', youtube:'YouTube', tiktok:'TikTok', x:'X', linkedin:'LinkedIn', facebook:'Facebook', threads:'Threads' };
+const DCORTO = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+const fecha = (s, largo) => { const [y,m,d] = s.split('-').map(Number); return new Date(y,m-1,d).toLocaleDateString('es-MX', largo ? {weekday:'long', day:'numeric', month:'short'} : {weekday:'short', day:'numeric', month:'short'}); };
+const plural = (n, s, p) => `${n} ${n===1?s:(p||s+'s')}`;
+
+let desdeVista = null; // primer día que se muestra en Calendario/Tabla
+let vista = (()=>{ try { return localStorage.getItem('vistaPlan') || 'cal'; } catch { return 'cal'; } })(), redVista = 'todas';
+let E = null, filtro = 'todos', timer = null, cfg = null, guardando = null, esperandoDescarga = false;
+// descarga el CSV en cuanto termina de generarse (solo si se pidió desde esta pestaña)
+function descargar(id) { const a = document.createElement('a'); a.href = '/api/metricool/csv?id=' + encodeURIComponent(id); a.download = ''; document.body.append(a); a.click(); a.remove(); }
+
+async function cargar() {
+  try { E = await (await fetch('/api/metricool/estado')).json(); if (!guardando) cfg = structuredClone(E.config); pintar();
+    if (esperandoDescarga && E.trabajo?.fin) { esperandoDescarga = false; if (E.trabajo.lote) descargar(E.trabajo.lote); } }
+  catch (e) { pon($('#estado'), 'No se pudo leer el estado: ' + e.message); }
+  clearTimeout(timer);
+  timer = setTimeout(cargar, E?.trabajo && !E.trabajo.fin ? 1000 : 15000);
+}
+// guarda la configuración (con pequeña espera para no guardar en cada tecla)
+function cambiar(fn) {
+  fn(cfg); pintarConfig();
+  clearTimeout(guardando);
+  guardando = setTimeout(async () => { try { await post('/api/metricool/config', { config: cfg }); } catch (e) { alert(e.message); } guardando = null; cargar(); }, 400);
+}
+
+function pintar() { pintarEstado(); pintarConfig(); pintarPlan(); pintarReporte(); pintarLotes(); pintarVideos(); }
+
+function pintarEstado() {
+  const faltan = E.drive.faltan.length;
+  const totB = E.pares.filter(p => p.B).length, progB = E.pares.filter(p => p.B?.prog.length).length;
+  pon($('#estado'), 
+    h('div',{class:'row', style:'justify-content:space-between'},
+      h('div',{class:'row'},
+        h('span',{class:'pill ' + (E.existe?'ok':'err')}, E.existe ? `${plural(E.pares.length,'video')} (A y B)` : 'No existe la carpeta'),
+        h('span',{class:'pill ' + (!E.drive.conectado?'err': faltan?'warn':'ok')}, !E.drive.conectado ? 'Drive sin conectar' : faltan ? `Faltan ${plural(faltan,'archivo')} en Drive` : 'Lo del plan ya está en Drive'),
+        h('span',{class:'pill'}, `B programados: ${progB}/${totB}`)),
+      faltan || !E.drive.conectado ? h('a',{href:'/drive?fuente=salida'}, 'Ir a Subir a Drive →') : null),
+    h('p',{class:'hint'}, E.carpeta),
+  );
+}
+
+function pintarConfig() {
+  const c = cfg;
+  const nDias = (()=>{ let n=0, f=c.desde; while (f<=c.hasta && n<400) { n++; const [y,m,d]=f.split('-').map(Number); const t=new Date(y,m-1,d+1); f=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`; } return n; })();
+  const grupos = [...new Set(Object.values(c.redes).filter(g=>g>0))].length;
+  const horaInput = (red, i) => h('input',{type:'time', value:(c.horas[red]||[])[i]||'', disabled: !c.redes[red], onchange:e=>cambiar(x=>{ x.horas[red] = [...(x.horas[red]||[])]; x.horas[red][i]=e.target.value; })});
+  pon($('#config'), 
+    h('div',{class:'row', style:'justify-content:space-between;margin-bottom:12px'},
+      h('h2',{style:'margin:0'}, 'Configuración'),
+      h('button',{class:'sm', onclick:async()=>{ if (!confirm('¿Volver a la configuración por defecto?')) return; await post('/api/metricool/config',{restablecer:true}); cfg=null; cargar(); }}, 'Restablecer por defecto')),
+    h('div',{class:'grid'},
+      h('div',{class:'field'}, h('label',{}, 'Semana a programar'),
+        h('div',{class:'row'},
+          h('input',{type:'date', value:c.desde, onchange:e=>cambiar(x=>{ x.desde=e.target.value; x.fechasAuto=false; })}), '→',
+          h('input',{type:'date', value:c.hasta, onchange:e=>cambiar(x=>{ x.hasta=e.target.value; x.fechasAuto=false; })})),
+        h('p',{class:'hint', style:'margin:0'}, plural(nDias,'día'), ' · ',
+          c.fechasAuto ? 'automático: la semana siguiente a lo último programado' : ['fechas elegidas a mano · ', h('a',{href:'#', onclick:e=>{ e.preventDefault(); cambiar(x=>{ x.fechasAuto=true; }); }}, 'volver a automático')])),
+      h('div',{class:'field'}, h('label',{}, 'Videos al día por red'),
+        h('div',{class:'seg'}, [1,2,3,4,5].map(n => h('button',{class:c.porDia===n?'on':'', onclick:()=>cambiar(x=>{ x.porDia=n; for (const r in x.horas) { const hs=[...(x.horas[r]||[])]; while (hs.length<n) hs.push(E.base.horas[r]?.[hs.length] || '12:00'); x.horas[r]=hs.slice(0,n); } })}, n)))),
+      h('div',{class:'field'}, h('label',{}, 'Días para versiones A'),
+        h('div',{class:'row dias'}, [1,2,3,4,5,6,0].map(d => h('button',{class: c.diasA.includes(d)?'on':'',
+          onclick:()=>cambiar(x=>x.diasA = x.diasA.includes(d) ? x.diasA.filter(y=>y!==d) : [...x.diasA,d])}, DCORTO[d]))),
+        h('p',{class:'hint', style:'margin:0'}, 'Salen las A de los videos marcados como "Estancado". Si no hay, ese día lleva B.')),
+    ),
+    h('div',{class:'field', style:'margin-top:16px'}, h('label',{}, 'Redes, escalonado y mejores horas'),
+      h('div',{class:'redes', style:'grid-template-columns:auto auto 1fr'}, Object.keys(NOM).map(k => [
+        h('span',{}, NOM[k]),
+        h('div',{class:'seg'}, [0,1,2,3].map(g => h('button',{class: c.redes[k]===g?'on':'', onclick:()=>cambiar(x=>x.redes[k]=g)}, g===0 ? 'No' : 'Grupo '+g))),
+        h('div',{class:'row', style:'gap:4px'}, Array.from({length:c.porDia}, (_,i) => h('span',{class:'hora'}, horaInput(k,i)))),
+      ])),
+      h('p',{class:'hint'},
+        grupos > 1
+          ? `Escalonado: cada día, cada grupo publica ${c.porDia} videos distintos; al día siguiente cada grupo publica los que sacó el otro. Así un video no sale en todas las redes el mismo día, y el orden continúa de una semana a la siguiente.`
+          : 'Con un solo grupo, todas las redes publican los mismos videos el mismo día.',
+        ' Las horas por defecto son las mejores horas generales de cada red (hora de Ciudad de México). Compáralas con "Best times" de Metricool, que usa los datos de tu cuenta.')),
+    h('div',{class:'grid', style:'margin-top:16px'},
+      h('div',{class:'field'}, h('label',{}, 'Texto (sale de caption.txt de cada video)'),
+        h('label',{class:'row', style:'font-size:14px'}, h('input',{type:'checkbox', checked:c.detalle, onchange:e=>cambiar(x=>x.detalle=e.target.checked)}), 'Incluir el resumen (técnicas usadas)'),
+        h('label',{class:'row', style:'font-size:14px'}, h('input',{type:'checkbox', checked:c.hashtagMaquina, onchange:e=>cambiar(x=>x.hashtagMaquina=e.target.checked)}), 'Añadir #NombreDeLaMáquina'),
+        h('label',{class:'row', style:'font-size:14px'}, h('input',{type:'checkbox', checked:c.hashtagsTema, onchange:e=>cambiar(x=>x.hashtagsTema=e.target.checked)}), h('span',{style:'flex:1;min-width:0'},'Hashtags según la descripción de cada video (#SQLInjection, #SUID, #SSH…)')),
+        h('input',{type:'text', value:c.hashtags, placeholder:'#hashtags fijos para todos', style:'padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--card)', onchange:e=>cambiar(x=>x.hashtags=e.target.value)}),
+        h('p',{class:'hint', style:'margin:0'}, 'La ruta interna "piloto/…/writeup.md" se quita siempre. Si una publicación va a X y pasa de 280 caracteres, se recorta quitando primero el resumen y luego los hashtags.')),
+      h('div',{class:'field'}, h('label',{}, 'YouTube y TikTok'),
+        h('label',{class:'row', style:'font-size:14px'}, 'YouTube como',
+          h('select',{onchange:e=>cambiar(x=>x.youtubeTipo=e.target.value)}, ['SHORT','VIDEO'].map(t=>h('option',{value:t, selected:c.youtubeTipo===t}, t==='SHORT'?'Short':'Video normal')))),
+        h('label',{class:'row', style:'font-size:14px'}, 'Categoría',
+          h('select',{onchange:e=>cambiar(x=>x.youtubeCategoria=e.target.value)}, [['SCIENCE_TECHNOLOGY','Ciencia y tecnología'],['EDUCATION','Educación'],['HOWTO_STYLE','Consejos y estilo'],['ENTERTAINMENT','Entretenimiento'],['PEOPLE_BLOGS','Personas y blogs'],['','(sin categoría)']].map(([v,n])=>h('option',{value:v, selected:c.youtubeCategoria===v}, n)))),
+        h('label',{class:'row', style:'font-size:14px'}, h('input',{type:'checkbox', checked:c.contenidoIA, onchange:e=>cambiar(x=>x.contenidoIA=e.target.checked)}), 'Marcar como contenido generado con IA'),
+        h('p',{class:'hint', style:'margin:0'}, 'Título de YouTube: "Máquina (dificultad) | primera línea del caption". Etiquetas: máquina, CTF, ciberseguridad y las técnicas del resumen.')),
+    ),
+  );
+}
+
+function pintarPlan() {
+  const P = E.plan, T = E.trabajo;
+  const dias = new Map();
+  for (const it of P.items) (dias.get(it.fecha) || dias.set(it.fecha, []).get(it.fecha)).push(it);
+  const vids = new Set(P.items.map(i => i.key+i.version)).size;
+  const corriendo = T && !T.fin;
+  const bloqueado = !P.items.length || !E.drive.conectado || E.drive.faltan.length || corriendo;
+  pon($('#plan'), 
+    h('div',{class:'row', style:'justify-content:space-between;margin-bottom:12px'},
+      h('h2',{style:'margin:0'}, 'Vista previa', h('span',{class:'hint', style:'font-weight:400;margin-left:8px'}, `${plural(vids,'video')} · ${plural(P.items.length,'publicación','publicaciones')} en el CSV`)),
+      h('button',{class:'primary', disabled: bloqueado, onclick: generar}, corriendo ? 'Generando…' : 'Generar CSV para Metricool')),
+    P.avisos.length ? h('div',{class:'avisos'}, P.avisos.map(a => h('p',{}, '⚠ ' + a))) : null,
+    E.drive.faltan.length ? h('div',{class:'avisos'}, h('p',{}, `⚠ Antes de generar, sube a Drive ${plural(E.drive.faltan.length,'archivo')} del plan: `, h('a',{href:'/drive?fuente=salida'}, 'Subir a Drive (carpeta salida)'), '.')) : null,
+    corriendo ? h('div',{}, h('p',{class:'hint'}, `Compartiendo enlaces de Drive… ${T.hechos}/${T.total}`), h('div',{class:'bar'}, h('i',{style:`width:${T.total?T.hechos/T.total*100:0}%`}))) : null,
+    T?.error ? h('div',{class:'avisos', style:'color:var(--err)'}, 'Error al generar: ' + T.error) : null,
+    P.items.length ? h('div',{class:'row', style:'justify-content:space-between;margin-bottom:10px'},
+      h('div',{class:'seg'}, Object.entries({cal:'Calendario', tabla:'Tabla', detalle:'Detalle'}).map(([k,n]) =>
+        h('button',{class: vista===k?'on':'', onclick:()=>{ vista=k; try{localStorage.setItem('vistaPlan',k);}catch{} pintarPlan(); }}, n))),
+      vista!=='detalle' ? navDias() : null,
+      vista==='tabla' ? h('select',{onchange:e=>{ redVista=e.target.value; pintarPlan(); }},
+        h('option',{value:'todas'}, 'Todas las redes'), redesPlan(P).map(r => h('option',{value:r, selected: redVista===r}, NOM[r]))) : null) : null,
+    !P.items.length ? h('div',{class:'empty'}, 'Nada que programar con esta configuración.')
+    : vista==='cal' ? vistaCal() : vista==='tabla' ? vistaTabla() : [...dias].map(([f, arr]) => h('div',{class:'dia'},
+      h('h3',{}, fecha(f, true), h('span',{}, arr.some(i=>i.version==='A') ? 'Día de versiones A' : plural(new Set(arr.map(i=>i.key)).size,'video'))),
+      arr.map(it => h('div',{class:'pub'},
+        h('span',{class:'t'}, it.hora),
+        h('span',{class:'v '+it.version}, it.version),
+        h('div',{}, h('div',{}, it.nombre), it.redes.map(r => h('span',{class:'red'}, NOM[r]))),
+        h('div',{class:'txt'}, it.texto),
+        it.tituloYT ? h('div',{class:'txt', style:'max-height:none'}, h('b',{}, 'YouTube: '), it.tituloYT, h('br'), h('span',{style:'opacity:.8'}, 'Etiquetas: ' + it.tagsYT.split(',').join(', '))) : null)),
+    )),
+  );
+}
+
+const DIAS_PAG = 7;
+const sumaDias = (iso, n) => { const d = new Date(iso + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+const hoyISO = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
+// todo lo que hay en el calendario: lo ya generado en CSV (programado/publicado) + el plan nuevo
+function todas() {
+  const nombres = new Map(E.plan.items.map(i => [i.key, i.nombre]));
+  const out = E.plan.items.map(i => ({ ...i, estado:'nuevo' }));
+  for (const p of E.pares) for (const ver of ['A','B']) for (const g of p[ver]?.prog || [])
+    out.push({ fecha:g.fecha, hora:g.hora, key:p.key, version:ver, redes:[g.red], nombre: nombres.get(p.key) || p.nombre, estado: g.publicado ? 'pub' : 'prog' });
+  return out;
+}
+const rangoTodo = T => { const f = T.map(i => i.fecha).sort(); return [f[0], f.at(-1)]; };
+function inicioVista(T) {
+  if (desdeVista) return desdeVista;
+  return E.plan.items.length ? E.plan.items.map(i => i.fecha).sort()[0] : hoyISO();
+}
+function navDias() {
+  const T = todas(), d0 = inicioVista(T), d1 = sumaDias(d0, DIAS_PAG - 1), [min, max] = rangoTodo(T);
+  const ir = n => { desdeVista = sumaDias(d0, n); pintarPlan(); };
+  return h('div',{class:'nav'},
+    h('button',{class:'sm', title:'Semana anterior', disabled: min && d0 <= min, onclick:()=>ir(-DIAS_PAG)}, '«'),
+    h('button',{class:'sm', title:'Día anterior', disabled: min && d0 <= min, onclick:()=>ir(-1)}, '‹'),
+    h('b',{}, `${fecha(d0)} – ${fecha(d1)}`),
+    h('button',{class:'sm', title:'Día siguiente', disabled: max && d1 >= max, onclick:()=>ir(1)}, '›'),
+    h('button',{class:'sm', title:'Semana siguiente', disabled: max && d1 >= max, onclick:()=>ir(DIAS_PAG)}, '»'),
+    h('button',{class:'sm', onclick:()=>{ desdeVista = hoyISO(); pintarPlan(); }}, 'Hoy'),
+    h('button',{class:'sm', title:'Ir al plan que se va a generar', onclick:()=>{ desdeVista = null; pintarPlan(); }}, 'Plan nuevo'));
+}
+const diasVista = () => { const d0 = inicioVista(); return Array.from({length:DIAS_PAG}, (_, i) => sumaDias(d0, i)); };
+const redesDe = T => ['instagram','facebook','youtube','tiktok','x','linkedin','threads'].filter(r => T.some(i => i.redes.includes(r)));
+const ETQ = { nuevo:'Nuevo (por generar)', prog:'Programado', pub:'Publicado' };
+const resumen = it => `${it.hora} · ${it.version} · ${it.nombre} · ${ETQ[it.estado]}${it.texto ? '\n' + it.texto : ''}${it.tituloYT ? '\n\nYouTube: ' + it.tituloYT : ''}`;
+const leyenda = () => h('p',{class:'ley'}, 'Negritas: nuevo, entra en el próximo CSV · Normal: ya programado · Tenue con ✓: ya publicado. Pasa el mouse para ver el texto.');
+// días en filas, redes en columnas; cada celda lista hora + video
+function vistaCal() {
+  const T = todas(), R = redesDe(T), hoy = hoyISO();
+  return [h('div',{class:'scroll'}, h('table',{class:'cal'},
+    h('thead',{}, h('tr',{}, h('th',{style:'width:92px'}, 'Día'), R.map(r => h('th',{}, NOM[r])))),
+    h('tbody',{}, diasVista().map(f => { const arr = T.filter(i => i.fecha === f); return h('tr',{},
+      h('td',{class:'d' + (f===hoy?' hoy':'')}, fecha(f)),
+      R.map(r => { const cel = arr.filter(i => i.redes.includes(r)).sort((a,b)=>a.hora.localeCompare(b.hora));
+        return h('td',{class:(f===hoy?'hoy ':'') + (cel.length?'':'vacio')}, cel.length ? cel.map(it =>
+          h('div',{class:'it e-' + it.estado, title: resumen(it)}, h('span',{class:'t'}, (it.estado==='pub'?'✓':'') + it.hora), h('span',{class:'v '+it.version}, it.version), h('span',{class:'nm'}, it.nombre))) : '—'); })); })))),
+    leyenda()];
+}
+// una fila por publicación y red
+function vistaTabla() {
+  const dias = new Set(diasVista()), filas = []; let antes = null;
+  for (const it of todas()) if (dias.has(it.fecha)) for (const r of it.redes) if (redVista==='todas' || redVista===r) filas.push({ ...it, red:r });
+  filas.sort((a,b) => (a.fecha+a.hora).localeCompare(b.fecha+b.hora));
+  if (!filas.length) return h('div',{class:'empty'}, 'No hay publicaciones en estos días.');
+  return h('div',{class:'scroll', style:'max-height:70vh;overflow-y:auto'}, h('table',{class:'tab'},
+    h('thead',{}, h('tr',{}, ['Fecha','Hora','Red','Ver.','Video','Estado','Texto'].map(t => h('th',{}, t)))),
+    h('tbody',{}, filas.map(it => { const nd = antes && antes!==it.fecha; antes = it.fecha;
+      return h('tr',{class: (nd?'nd ':'') + 'e-' + it.estado, title: resumen(it)}, h('td',{}, fecha(it.fecha)), h('td',{}, it.hora), h('td',{}, NOM[it.red]),
+        h('td',{}, h('span',{class:'v '+it.version}, it.version)), h('td',{}, it.nombre), h('td',{}, ETQ[it.estado]), h('td',{class:'x'}, it.texto ? it.texto.split('\n')[0] : '')); }))));
+}
+// las redes del filtro de la tabla salen de todo el calendario
+const redesPlan = () => redesDe(todas());
+
+// ---------- Reporte por rango de fechas ----------
+const lunes = iso => { const d = new Date(iso + 'T12:00:00Z'); return sumaDias(iso, -((d.getUTCDay() + 6) % 7)); };
+const difDias = (a, b) => Math.round((new Date(b + 'T12:00:00Z') - new Date(a + 'T12:00:00Z')) / 864e5);
+let rep = (() => { const l = lunes(hoyISO()); return { desde: l, hasta: sumaDias(l, 6) }; })();
+function datosReporte() {
+  const filas = [];
+  for (const it of todas()) if (it.fecha >= rep.desde && it.fecha <= rep.hasta) for (const r of it.redes) filas.push({ ...it, red: r });
+  filas.sort((a, b) => (a.fecha + a.hora + a.red).localeCompare(b.fecha + b.hora + b.red));
+  return filas;
+}
+function pintarReporte() {
+  const F = datosReporte(), R = redesDe(todas()), n = difDias(rep.desde, rep.hasta) + 1;
+  const cuenta = (arr, est) => arr.filter(f => !est || f.estado === est).length;
+  const mover = k => { rep = { desde: sumaDias(rep.desde, k * n), hasta: sumaDias(rep.hasta, k * n) }; pintarReporte(); };
+  const semana = k => { const l = sumaDias(lunes(hoyISO()), 7 * k); rep = { desde: l, hasta: sumaDias(l, 6) }; pintarReporte(); };
+  const fija = (campo, v) => { if (!v) return; rep[campo] = v; if (rep.desde > rep.hasta) rep[campo === 'desde' ? 'hasta' : 'desde'] = v; pintarReporte(); };
+  const videos = new Map();
+  for (const f of F) { const v = videos.get(f.key) || videos.set(f.key, { nombre: f.nombre, A: 0, B: 0, redes: new Set(), pub: 0, total: 0 }).get(f.key);
+    v[f.version]++; v.redes.add(NOM[f.red]); v.total++; if (f.estado === 'pub') v.pub++; }
+  const dias = Array.from({ length: n }, (_, i) => sumaDias(rep.desde, i));
+  const pendientesB = E.pares.filter(p => p.B && !p.B.prog.length).length;
+  const estancados = E.pares.filter(p => p.estancado).length;
+  const th = (t, cls) => h('th', { class: cls || '' }, t), td = (t, cls) => h('td', { class: cls || '' }, t);
+  pon($('#reporte'),
+    h('div', { class: 'row', style: 'justify-content:space-between' },
+      h('h2', { style: 'margin:0' }, 'Reporte ', h('span', { class: 'hint', style: 'font-weight:400' }, `${fecha(rep.desde, true)} – ${fecha(rep.hasta, true)} (${plural(n, 'día')})`)),
+      h('div', { class: 'row noprint' },
+        h('button', { class: 'sm', disabled: !F.length, onclick: () => descargarReporte(F) }, '⬇ CSV'),
+        h('button', { class: 'sm', disabled: !F.length, onclick: () => { document.body.classList.add('imprimir'); window.print(); document.body.classList.remove('imprimir'); } }, '🖨 Imprimir / PDF'))),
+    h('div', { class: 'row noprint', style: 'margin-top:10px' },
+      h('button', { class: 'sm', onclick: () => semana(-1) }, 'Semana pasada'),
+      h('button', { class: 'sm', onclick: () => semana(0) }, 'Esta semana'),
+      h('button', { class: 'sm', onclick: () => semana(1) }, 'Próxima semana'),
+      h('span', { class: 'hint', style: 'margin:0 0 0 6px' }, 'Desde'),
+      h('input', { type: 'date', value: rep.desde, onchange: e => fija('desde', e.target.value) }),
+      h('span', { class: 'hint', style: 'margin:0' }, 'hasta'),
+      h('input', { type: 'date', value: rep.hasta, onchange: e => fija('hasta', e.target.value) }),
+      h('button', { class: 'sm', title: 'Rango anterior del mismo tamaño', onclick: () => mover(-1) }, '‹'),
+      h('button', { class: 'sm', title: 'Rango siguiente del mismo tamaño', onclick: () => mover(1) }, '›')),
+    !F.length ? h('div', { class: 'empty' }, 'No hay publicaciones en estas fechas.') : h('div', { class: 'rep' },
+      h('div', { class: 'kpis' },
+        [[F.length, 'publicaciones'], [cuenta(F, 'pub'), 'publicadas ✓'], [cuenta(F, 'prog'), 'programadas'], [cuenta(F, 'nuevo'), 'por generar (sin CSV)'],
+         [videos.size, 'videos distintos'], [F.filter(f => f.version === 'A').length, 'versiones A']]
+          .map(([v, t]) => h('div', { class: 'kpi' }, h('b', {}, v), h('span', {}, t)))),
+      h('h3', {}, 'Por red'),
+      h('div', { class: 'scroll' }, h('table', { class: 'tab' },
+        h('thead', {}, h('tr', {}, th('Red'), th('Publicadas', 'n'), th('Programadas', 'n'), th('Por generar', 'n'), th('B', 'n'), th('A', 'n'), th('Total', 'n'))),
+        h('tbody', {}, [...R.map(r => [NOM[r], F.filter(f => f.red === r)]), ['Total', F]].filter(([, a]) => a.length).map(([nom, a], i, all) =>
+          h('tr', { class: i === all.length - 1 ? 'tot' : '' }, td(nom), td(cuenta(a, 'pub'), 'n'), td(cuenta(a, 'prog'), 'n'), td(cuenta(a, 'nuevo'), 'n'),
+            td(a.filter(f => f.version === 'B').length, 'n'), td(a.filter(f => f.version === 'A').length, 'n'), td(a.length, 'n')))))),
+      h('h3', {}, 'Por día'),
+      h('div', { class: 'scroll' }, h('table', { class: 'tab' },
+        h('thead', {}, h('tr', {}, th('Día'), R.map(r => th(NOM[r], 'n')), th('Total', 'n'))),
+        h('tbody', {}, dias.map(d => { const a = F.filter(f => f.fecha === d);
+          return h('tr', {}, td(fecha(d)), R.map(r => td(a.filter(f => f.red === r).length || '—', 'n')), td(a.length, 'n')); })))),
+      h('h3', {}, 'Por video'),
+      h('div', { class: 'scroll' }, h('table', { class: 'tab' },
+        h('thead', {}, h('tr', {}, th('Video'), th('Redes'), th('B', 'n'), th('A', 'n'), th('Publicadas', 'n'), th('Total', 'n'))),
+        h('tbody', {}, [...videos.values()].sort((a, b) => b.total - a.total || a.nombre.localeCompare(b.nombre)).map(v =>
+          h('tr', {}, td(v.nombre), td([...v.redes].join(', '), 'x'), td(v.B, 'n'), td(v.A, 'n'), td(v.pub, 'n'), td(v.total, 'n')))))),
+      h('h3', {}, 'Detalle'),
+      h('div', { class: 'scroll' }, h('table', { class: 'tab' },
+        h('thead', {}, h('tr', {}, ['Fecha', 'Hora', 'Red', 'Ver.', 'Video', 'Estado'].map(t => th(t)))),
+        h('tbody', {}, F.map(f => h('tr', { class: 'e-' + f.estado }, td(fecha(f.fecha)), td(f.hora), td(NOM[f.red]), td(h('span', { class: 'v ' + f.version }, f.version)), td(f.nombre), td(ETQ[f.estado])))))),
+      leyendasReporte()),
+  );
+}
+// leyendas: lo programado en las 2 semanas siguientes al rango y lo que falta por programar
+function leyendasReporte() {
+  const T = todas(), sig = [];
+  let ini = lunes(sumaDias(rep.hasta, 1));
+  if (ini <= rep.hasta) ini = sumaDias(ini, 7);
+  for (let k = 0; k < 2; k++) {
+    const d0 = sumaDias(ini, 7 * k), d1 = sumaDias(d0, 6);
+    const a = T.filter(i => i.fecha >= d0 && i.fecha <= d1), pubs = a.reduce((n, i) => n + i.redes.length, 0);
+    const f = a.map(i => i.fecha).sort(), nuevo = a.filter(i => i.estado === 'nuevo').reduce((n, i) => n + i.redes.length, 0);
+    sig.push(h('p', {}, h('b', {}, `${fecha(d0)} – ${fecha(d1)}: `), !a.length ? 'nada programado.'
+      : `${plural(pubs, 'publicación', 'publicaciones')} de ${plural(new Set(a.map(i => i.key + i.version)).size, 'video')}, del ${fecha(f[0])} al ${fecha(f.at(-1))}`
+        + (nuevo ? ` (${nuevo} aún por generar en CSV)` : '') + '.'));
+  }
+  const enPlan = new Set(E.plan.items.map(i => i.key + '|' + i.version));
+  const sinB = E.pares.filter(p => p.B && !p.B.prog.length);
+  const libres = sinB.filter(p => !enPlan.has(p.key + '|B')), plan = sinB.filter(p => enPlan.has(p.key + '|B'));
+  const nombre = p => E.plan.items.find(i => i.key === p.key)?.nombre || p.nombre;
+  const estA = E.pares.filter(p => p.estancado && p.A && !p.A.prog.length);
+  return [
+    h('div', { class: 'leyenda' }, h('p', {}, h('b', {}, '📅 Programado en las siguientes semanas')), sig),
+    h('div', { class: 'leyenda' }, h('p', {}, h('b', {}, '⏳ Aún sin programar (versión B, sin CSV)')),
+      !sinB.length ? h('p', {}, 'Todos los videos tienen su B programada.') : [
+        plan.length ? h('p', {}, `En el plan nuevo, falta generar su CSV (${plan.length}): `, plan.map(nombre).join(', '), '.') : null,
+        libres.length ? h('p', {}, `Fuera de cualquier plan (${libres.length}): `, libres.map(nombre).join(', '), '.') : null],
+      estA.length ? h('p', {}, `Estancados con A sin programar (${estA.length}): `, estA.map(nombre).join(', '), '.') : null,
+      h('p', { class: 'hint' }, '"Publicada" = ya pasó su fecha y hora según el calendario; las vistas y likes se ven en Metricool.')),
+  ];
+}
+
+function descargarReporte(F) {
+  const q = v => /[",\n]/.test(v) ? '"' + String(v).replace(/"/g, '""') + '"' : String(v);
+  const txt = '﻿' + [['Fecha', 'Hora', 'Red', 'Version', 'Video', 'Estado', 'Texto'], ...F.map(f => [f.fecha, f.hora, NOM[f.red], f.version, f.nombre, ETQ[f.estado], (f.texto || '').split('\n')[0]])]
+    .map(r => r.map(q).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([txt], { type: 'text/csv;charset=utf-8' }));
+  a.download = `reporte-ajolo-${rep.desde}_a_${rep.hasta}.csv`; document.body.append(a); a.click(); a.remove();
+}
+
+async function generar() {
+  const n = new Set(E.plan.items.flatMap(i => [i.key+i.version])).size;
+  if (!confirm(`Se generará el CSV con ${plural(E.plan.items.length,'publicación','publicaciones')} (${plural(n,'video')}).\n\nPara que Metricool pueda descargarlos, los videos y portadas de esos ${n} videos quedarán en Drive como "Cualquier persona con el enlace puede ver".\n\n¿Continuar?`)) return;
+  try { esperandoDescarga = true; await post('/api/metricool/generar'); } catch (e) { esperandoDescarga = false; alert(e.message); }
+  cargar();
+}
+
+function pintarLotes() {
+  const L = [...E.lotes].reverse();
+  pon($('#lotes'), 
+    h('h2',{}, 'CSV generados'),
+    L.length ? L.map(l => h('div',{class:'lote'},
+      h('a',{href:'/api/metricool/csv?id='+encodeURIComponent(l.id)}, '⬇ ' + l.archivo),
+      h('span',{class:'hint', style:'margin:0;flex:1'}, `${plural(l.n,'publicación','publicaciones')} · ${fecha(l.desde)} → ${fecha(l.hasta)} · creado ${new Date(l.creado).toLocaleString('es-MX',{dateStyle:'short',timeStyle:'short'})} · ${horasLote(l.config)}`),
+      h('button',{class:'sm', title:'Si no lo importaste en Metricool, deshazlo para que esos videos vuelvan a quedar sin programar', onclick:async()=>{ if (!confirm('¿Deshacer este CSV?\n\nÚsalo solo si NO lo importaste en Metricool. Sus videos volverán a quedar "sin programar" y entrarán en el siguiente plan.')) return; await post('/api/metricool/deshacer',{id:l.id}); cargar(); }}, 'Deshacer')))
+    : h('p',{class:'hint', style:'margin:0'}, 'Todavía no has generado ninguno. En Metricool: Planning → ⋮ → Import CSV, con fecha YYYY-MM-DD y hora HH:MM:SS.'),
+  );
+}
+
+function estadoVersion(v) {
+  if (!v) return { tipo:'falta', txt:'No existe' };
+  if (!v.prog.length) return { tipo:'nada', txt:'Sin programar' };
+  const pub = v.prog.every(p => p.publicado);
+  return { tipo: pub ? 'publicado' : 'programado' };
+}
+function pintarVideos() {
+  const cat = p => { const b = estadoVersion(p.B).tipo; return b==='nada' ? 'sin' : b; };
+  const cuenta = { todos:E.pares.length, sin:0, programado:0, publicado:0, estancado:0 };
+  for (const p of E.pares) { cuenta[cat(p)] = (cuenta[cat(p)]||0)+1; if (p.estancado) cuenta.estancado++; }
+  const vis = E.pares.filter(p => filtro==='todos' || (filtro==='estancado' ? p.estancado : cat(p)===filtro));
+  const linea = (ver, v) => {
+    const s = estadoVersion(v);
+    return [h('span',{class:'v '+ver, style: v?'':'opacity:.35'}, ver),
+      h('div',{}, s.txt ? h('span',{class:'hint', style:'margin:0'}, s.txt + (ver==='A' && v && !v.prog.length ? ' · guardado para estancados' : '')) :
+        v.prog.slice().sort((a,b)=>(a.fecha+a.hora).localeCompare(b.fecha+b.hora)).map(p => h('span',{class:'red' + (p.publicado?' pub-ok':''), title: p.publicado ? 'Ya pasó la fecha (publicado según el calendario)' : 'Programado'},
+          `${p.publicado?'✓ ':''}${NOM[p.red]} · ${fecha(p.fecha)} ${p.hora}`)))];
+  };
+  pon($('#videos'), 
+    h('h2',{}, 'Videos'),
+    h('div',{class:'filters'}, Object.entries({todos:'Todos', sin:'B sin programar', programado:'B programados', publicado:'B publicados', estancado:'Estancados'})
+      .map(([k,n]) => h('button',{class: filtro===k?'on':'', onclick:()=>{filtro=k; pintarVideos();}}, `${n} (${cuenta[k]||0})`))),
+    vis.length ? vis.map(p => h('div',{class:'vid'},
+      h('div',{class:'n'}, p.nombre, h('small',{}, [p.dificultad, fecha(p.fecha)].filter(Boolean).join(' · '))),
+      h('label',{class:'row', style:'font-size:13px;color:var(--muted)', title:'Su versión A se programará el próximo día de A'},
+        h('input',{type:'checkbox', checked:p.estancado, disabled: !p.A, onchange:async e=>{ await post('/api/metricool/estancado',{key:p.key, valor:e.target.checked}); cargar(); }}), 'Estancado'),
+      h('div',{class:'st'}, linea('B', p.B), linea('A', p.A)),
+    )) : h('div',{class:'empty'}, 'Nada en esta categoría.'),
+  );
+}
+
+cargar();
+</script>
+</body>
+</html>

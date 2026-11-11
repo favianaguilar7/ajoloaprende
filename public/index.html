@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajolo Publicador</title>
+<style>
+:root{
+  --bg:#f6f5f2; --card:#ffffff; --ink:#1d1d1b; --muted:#6b6a66; --line:#e3e1dc;
+  --accent:#d6457a; --accent-ink:#fff; --ok:#1f8a4c; --warn:#b26a00; --err:#c0392b;
+  --chip:#efedea; --sel:#1d1d1b; --sel-ink:#fff;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#151514; --card:#1f1f1d; --ink:#f0eee9; --muted:#a3a19b; --line:#33322f;
+  --accent:#f06a9b; --accent-ink:#1a0b11; --ok:#4cc27f; --warn:#e3a33b; --err:#ff6b5e;
+  --chip:#2a2a27; --sel:#f0eee9; --sel-ink:#151514; color-scheme:dark;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 20px 80px}
+header.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
+h1{font-size:22px;margin:0;letter-spacing:-.01em}
+h1 small{display:block;font-size:13px;font-weight:400;color:var(--muted)}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px}
+button:hover{border-color:var(--muted)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+button:disabled{opacity:.5;cursor:default}
+input,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 10px;width:100%}
+textarea{min-height:96px;resize:vertical}
+label.f{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+.pill{font-size:13px;padding:5px 10px;border-radius:999px;background:var(--chip)}
+.pill.ok{color:var(--ok)} .pill.warn{color:var(--warn)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+.cfg-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end}
+@media (max-width:640px){.cfg-grid{grid-template-columns:1fr}}
+.hint{font-size:13px;color:var(--muted)}
+nav.tabs{display:flex;gap:4px;background:var(--chip);padding:3px;border-radius:10px}
+nav.tabs a{padding:5px 12px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14px}
+nav.tabs a.on{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+details.cap{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+details.cap>summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:center;padding:12px 16px;flex-wrap:wrap}
+details.cap>summary::-webkit-details-marker{display:none}
+.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent);min-width:2ch}
+.ttl{font-weight:600;flex:1;min-width:200px}
+.chips{display:flex;gap:4px;flex-wrap:wrap}
+.chip{font-size:11px;padding:2px 7px;border-radius:999px;background:var(--chip);color:var(--muted);white-space:nowrap}
+.chip.on{color:var(--ink)} .chip.done{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+.chip.fail{background:color-mix(in srgb,var(--err) 18%,transparent);color:var(--err)}
+.body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px;padding:4px 16px 16px}
+@media (max-width:800px){.body{grid-template-columns:1fr}}
+.prevs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.prev{position:relative;border-radius:10px;overflow:hidden;background:#000;aspect-ratio:9/16}
+.prev img,.prev video{width:100%;height:100%;object-fit:cover;display:block}
+.prev .tag{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px}
+.prev .play{position:absolute;inset:auto 8px 8px auto;background:rgba(0,0,0,.65);color:#fff;border:0;font-size:12px}
+table.m{border-collapse:collapse;width:100%}
+table.m td{padding:5px 0;border-bottom:1px solid var(--line)}
+table.m td:first-child{font-weight:500}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:0;border-radius:0;padding:4px 12px;background:transparent}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.sel{background:var(--sel);color:var(--sel-ink);font-weight:600}
+.quick{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.quick button{font-size:12px;padding:3px 9px}
+.count{font-size:12px;color:var(--muted);text-align:right}.count.bad{color:var(--err)}
+.actions{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.confirm{margin-top:12px;padding:12px;border-radius:10px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.confirm ul{margin:6px 0 10px;padding-left:18px}
+.msg{font-size:13px;margin-top:8px}.msg.err{color:var(--err)}.msg.ok{color:var(--ok)}
+.hist{margin-top:16px;border-top:1px dashed var(--line);padding-top:10px}
+.hist h4{margin:0 0 6px;font-size:13px;color:var(--muted);font-weight:600}
+.h{font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
+.h .res{color:var(--muted);margin-top:2px}
+.h a{color:var(--accent)}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Ajolo Publicador<small id="carpeta">Cargando…</small></h1>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <nav class="tabs"><a href="/" class="on">Publicar en redes</a><a href="/drive">Subir a Drive</a><a href="/metricool">Programar A/B</a></nav>
+      <span id="cfgPill" class="pill">…</span>
+      <button id="cfgBtn">Configurar</button>
+    </div>
+  </header>
+
+  <section id="cfg" class="panel" hidden>
+    <div class="cfg-grid">
+      <div><label class="f">Usuario (perfil) de Upload-Post</label><input id="cfgUser" placeholder="p. ej. principal"></div>
+      <div><label class="f">API key de Upload-Post</label><input id="cfgKey" type="password" placeholder="Se guarda en el Llavero de macOS" autocomplete="off"></div>
+      <button class="primary" id="cfgSave">Guardar</button>
+    </div>
+    <p class="hint">La API key se guarda en el Llavero de tu Mac y no en archivos. Deja el campo vacío si no quieres cambiarla.</p>
+  </section>
+
+  <main id="lista"><div class="empty">Cargando capítulos…</div></main>
+</div>
+
+<script>
+const REDES = [['youtube','YouTube'],['x','X'],['linkedin','LinkedIn'],['tiktok','TikTok'],['instagram','Instagram']];
+const $ = (s, el=document) => el.querySelector(s);
+const h = (tag, attrs={}, ...kids) => { const e=document.createElement(tag); for (const [k,v] of Object.entries(attrs)) { if (k==='class') e.className=v; else if (k.startsWith('on')) e.addEventListener(k.slice(2),v); else if (v!==false && v!=null) e.setAttribute(k, v===true?'':v); } for (const k of kids.flat()) if (k!=null) e.append(k.nodeType?k:document.createTextNode(k)); return e; };
+const media = rel => '/media?f=' + encodeURIComponent(rel);
+const api = async (url, body) => { const r = await fetch(url, body ? {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)} : {}); const j = await r.json(); if (!r.ok) throw new Error(j.error || r.statusText); return j; };
+const store = { get(k,d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch{ return d; } }, set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} } };
+
+let CAPS = [], HIST = [], CFG = {}, TOTAL = 0;
+const OK = new Set(['completed','programado','enviado','queued','processing','in_progress','pending']);
+
+async function cargar() {
+  const [c, hist, cfg] = await Promise.all([api('/api/capitulos'), api('/api/historial'), api('/api/config')]);
+  CAPS = c.capitulos; HIST = hist; CFG = cfg; TOTAL = CAPS.length;
+  $('#carpeta').textContent = c.existe ? `${TOTAL} capítulos · ${c.carpeta.replace(/^.*CloudDocs\//,'iCloud Drive/')}` : 'No se encontró la carpeta: ' + c.carpeta;
+  pintarCfg(); pintar();
+}
+
+function pintarCfg() {
+  const ok = CFG.tieneKey && CFG.usuario;
+  $('#cfgPill').className = 'pill ' + (ok ? 'ok' : 'warn');
+  $('#cfgPill').textContent = ok ? `Upload-Post ✓ · ${CFG.usuario}` : 'Upload-Post sin configurar';
+  $('#cfgUser').value = CFG.usuario || '';
+  if (!ok) $('#cfg').hidden = false;
+}
+$('#cfgBtn').onclick = () => $('#cfg').hidden = !$('#cfg').hidden;
+$('#cfgSave').onclick = async () => {
+  await api('/api/config', { usuario: $('#cfgUser').value, apiKey: $('#cfgKey').value });
+  $('#cfgKey').value = ''; CFG = await api('/api/config'); pintarCfg();
+  if (CFG.tieneKey && CFG.usuario) $('#cfg').hidden = true;
+};
+
+// Estado publicado por red: la última entrada correcta de cada red
+function publicado(capId) {
+  const r = {};
+  for (const e of HIST.filter(e => e.capitulo === capId))
+    for (const red of e.redes) {
+      const pr = (e.resultados || []).find?.(x => x.platform === red);
+      const fallo = !e.ok || e.estado === 'failed' || (pr && (pr.status === 'failed' || pr.success === false));
+      if (!fallo || !r[red]) r[red] = { v: e.version, fallo, estado: e.estado };
+    }
+  return r;
+}
+
+function pintar() {
+  const lista = $('#lista'); lista.innerHTML = '';
+  if (!CAPS.length) { lista.append(h('div',{class:'empty'},'No hay capítulos en la carpeta.')); return; }
+  const abiertos = store.get('abiertos', []);
+  for (const cap of CAPS) lista.append(tarjeta(cap, abiertos.includes(cap.id)));
+}
+
+function tarjeta(cap, abierto) {
+  const vers = Object.keys(cap.versiones).sort();
+  const base = cap.versiones[vers[0]] || {};
+  const k = 'sel:' + cap.id;
+  const st = store.get(k, { asig:{}, titulo: `${cap.titulo} · Capítulo ${cap.num}/${TOTAL}`, texto: base.texto || '' });
+  const save = () => store.set(k, st);
+  const pub = publicado(cap.id);
+
+  const chips = h('div',{class:'chips'}, REDES.map(([id,nom]) => {
+    const p = pub[id], s = st.asig[id];
+    const cls = p ? (p.fallo ? 'chip fail' : 'chip done') : s ? 'chip on' : 'chip';
+    const txt = p ? `${nom} ${p.v}${p.fallo?' ✗':' ✓'}` : s ? `${nom} → ${s}` : nom;
+    return h('span',{class:cls, title: p ? `Publicado versión ${p.v} (${p.estado})` : s ? 'Seleccionado, sin publicar' : 'Sin asignar'}, txt);
+  }));
+
+  const d = h('details',{class:'cap', open:abierto},
+    h('summary',{}, h('span',{class:'num'}, String(cap.num).padStart(2,'0')), h('span',{class:'ttl'}, cap.titulo), chips));
+  d.addEventListener('toggle', () => { const a = new Set(store.get('abiertos',[])); d.open ? a.add(cap.id) : a.delete(cap.id); store.set('abiertos',[...a]); });
+
+  // Vista previa C / D
+  const prevs = h('div',{class:'prevs'}, vers.map(v => {
+    const ver = cap.versiones[v];
+    const box = h('div',{class:'prev'}, ver.portada ? h('img',{src:media(ver.portada), alt:'Portada '+v, loading:'lazy'}) : null, h('span',{class:'tag'}, 'Versión '+v));
+    if (ver.video) box.append(h('button',{class:'play', onclick:() => { box.querySelector('img')?.remove(); box.querySelector('.play').remove(); box.prepend(h('video',{src:media(ver.video), controls:true, autoplay:true, playsinline:true, poster: ver.portada?media(ver.portada):false})); }}, '▶ Ver video'));
+    return box;
+  }));
+
+  // Matriz red × versión
+  const filas = REDES.map(([id,nom]) => {
+    const seg = h('div',{class:'seg'});
+    const opts = ['', ...vers];
+    const paint = () => [...seg.children].forEach((b,i) => b.classList.toggle('sel', (st.asig[id]||'') === opts[i]));
+    opts.forEach(v => seg.append(h('button',{type:'button', title: v ? 'Versión '+v : 'No publicar', onclick:() => { if (v) st.asig[id]=v; else delete st.asig[id]; save(); paint(); refrescarChips(); }}, v || '—')));
+    paint();
+    return h('tr',{}, h('td',{}, nom), h('td',{style:'text-align:right'}, seg));
+  });
+  const tabla = h('table',{class:'m'}, h('tbody',{}, filas));
+  const setAll = v => { REDES.forEach(([id]) => v ? st.asig[id]=v : delete st.asig[id]); save(); d.replaceWith(tarjeta(cap, true)); };
+  const quick = h('div',{class:'quick'}, vers.map(v => h('button',{onclick:()=>setAll(v)}, 'Todo '+v)), h('button',{onclick:()=>setAll('')}, 'Ninguna'));
+
+  const titulo = h('input',{value:st.titulo, maxlength:100});
+  titulo.oninput = () => { st.titulo = titulo.value; save(); };
+  const texto = h('textarea',{}); texto.value = st.texto;
+  const cnt = h('div',{class:'count'});
+  const contar = () => { const n=[...texto.value.trim()].length; cnt.textContent = `${n} caracteres · X admite 280`; cnt.classList.toggle('bad', n>280); };
+  texto.oninput = () => { st.texto = texto.value; save(); contar(); }; contar();
+  const restaurar = h('button',{style:'font-size:12px;padding:2px 8px', onclick:() => { texto.value = st.texto = base.texto || ''; save(); contar(); }}, 'Restaurar texto original');
+
+  const prog = h('input',{type:'datetime-local'});
+  const msg = h('div',{class:'msg'});
+  const conf = h('div',{});
+  const btn = h('button',{class:'primary'}, 'Publicar…');
+
+  btn.onclick = () => {
+    msg.textContent = ''; msg.className = 'msg'; conf.innerHTML = '';
+    const grupos = {};
+    REDES.forEach(([id,nom]) => { const v = st.asig[id]; if (v) (grupos[v] ||= []).push(nom); });
+    if (!Object.keys(grupos).length) { msg.textContent = 'Elige al menos una red.'; msg.classList.add('err'); return; }
+    if (!(CFG.tieneKey && CFG.usuario)) { msg.textContent = 'Primero configura Upload-Post (arriba).'; msg.classList.add('err'); $('#cfg').hidden=false; return; }
+    const repetidas = REDES.filter(([id]) => st.asig[id] && pub[id] && !pub[id].fallo).map(([,n]) => n);
+    const cuando = prog.value ? 'programado para ' + new Date(prog.value).toLocaleString('es-MX', {dateStyle:'full', timeStyle:'short'}) : 'ahora';
+    const ok = h('button',{class:'primary'}, 'Sí, publicar');
+    const no = h('button',{onclick:() => conf.innerHTML=''}, 'Cancelar');
+    conf.append(h('div',{class:'confirm'},
+      h('strong',{}, `Capítulo ${cap.num}, publicar ${cuando}:`),
+      h('ul',{}, Object.entries(grupos).map(([v,rs]) => h('li',{}, `Versión ${v} → ${rs.join(', ')}`))),
+      repetidas.length ? h('div',{class:'msg err', style:'margin:0 0 10px'}, `⚠ Ya se publicó en: ${repetidas.join(', ')}. Se publicará de nuevo.`) : null,
+      h('div',{class:'actions', style:'margin:0'}, ok, no)));
+    ok.onclick = async () => {
+      ok.disabled = no.disabled = btn.disabled = true;
+      ok.textContent = 'Subiendo… (iCloud puede tardar en bajar el video)';
+      try {
+        const res = await api('/api/publicar', { id: cap.id, titulo: titulo.value, texto: texto.value, asignacion: st.asig, programar: prog.value || '' });
+        HIST = await api('/api/historial');
+        const fallos = res.filter(r => !r.ok);
+        const nueva = tarjeta(cap, true); d.replaceWith(nueva);
+        const m = nueva.querySelector('.msg');
+        m.textContent = fallos.length ? 'Error: ' + fallos.map(f => `${f.version}: ${f.mensaje || f.http}`).join(' · ') : '✓ Enviado a Upload-Post. Usa "Actualizar estado" para ver cómo va cada red.';
+        m.classList.add(fallos.length ? 'err' : 'ok');
+      } catch (e) {
+        conf.innerHTML=''; btn.disabled=false; msg.textContent = 'Error: ' + e.message; msg.classList.add('err');
+      }
+    };
+  };
+
+  const der = h('div',{},
+    tabla, quick,
+    h('label',{class:'f'}, 'Título (YouTube y LinkedIn)'), titulo,
+    h('label',{class:'f'}, 'Texto de la publicación (todas las redes) '), texto,
+    h('div',{style:'display:flex;justify-content:space-between;align-items:center;margin-top:4px'}, restaurar, cnt),
+    h('label',{class:'f'}, 'Programar (opcional, hora de Ciudad de México). Vacío = publicar ahora'), prog,
+    h('div',{class:'actions'}, btn), conf, msg,
+    historial(cap));
+  d.append(h('div',{class:'body'}, prevs, der));
+
+  function refrescarChips(){ const n = tarjeta(cap, true).querySelector('.chips'); d.querySelector('.chips').replaceWith(n); }
+  return d;
+}
+
+function historial(cap) {
+  const items = HIST.filter(e => e.capitulo === cap.id).reverse();
+  if (!items.length) return null;
+  return h('div',{class:'hist'}, h('h4',{}, 'Historial'), items.map(e => {
+    const res = (Array.isArray(e.resultados) ? e.resultados : []).map(r => {
+      const url = r.post_url || r.url;
+      return h('span',{}, `${r.platform}: ${r.status || (r.success ? 'ok' : 'error')}`, url ? [' ', h('a',{href:url, target:'_blank', rel:'noopener'}, 'ver')] : null, '  ');
+    });
+    const upd = h('button',{style:'font-size:12px;padding:2px 8px;margin-left:8px', onclick: async () => { upd.disabled = true; try { await api('/api/estado', {id:e.id}); HIST = await api('/api/historial'); const card = upd.closest('details'); card.replaceWith(tarjeta(cap, true)); } catch(err){ upd.textContent = 'Error: '+err.message; } }}, 'Actualizar estado');
+    return h('div',{class:'h'},
+      h('div',{}, new Date(e.fecha).toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'}), ` · Versión ${e.version} → ${e.redes.join(', ')} · `,
+        h('strong',{style:`color:var(${e.ok && e.estado!=='failed' ? '--ok' : '--err'})`}, e.estado || (e.ok?'ok':'error')),
+        e.programado ? ` (programado ${new Date(e.programado).toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'})})` : '',
+        (e.request_id || e.job_id) ? upd : null),
+      e.mensaje ? h('div',{class:'res'}, e.mensaje) : null,
+      res.length ? h('div',{class:'res'}, res) : null);
+  }));
+}
+
+cargar().catch(e => { $('#lista').innerHTML = ''; $('#lista').append(h('div',{class:'empty'}, 'Error: ' + e.message)); });
+</script>
+</body>
+</html>

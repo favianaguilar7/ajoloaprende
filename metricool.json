@@ -1,0 +1,1685 @@
+{
+  "config": {
+    "desde": null,
+    "hasta": null,
+    "porDia": 3,
+    "horas": {
+      "instagram": [
+        "12:00",
+        "18:00",
+        "21:00"
+      ],
+      "tiktok": [
+        "13:00",
+        "19:00",
+        "22:00"
+      ],
+      "youtube": [
+        "14:00",
+        "17:00",
+        "20:00"
+      ],
+      "x": [
+        "09:00",
+        "12:00",
+        "18:00"
+      ],
+      "linkedin": [
+        "08:30",
+        "12:30",
+        "17:00"
+      ],
+      "facebook": [
+        "09:00",
+        "13:00",
+        "19:00"
+      ],
+      "threads": [
+        "10:00",
+        "14:00",
+        "20:00"
+      ]
+    },
+    "redes": {
+      "instagram": 1,
+      "facebook": 1,
+      "youtube": 2,
+      "tiktok": 2,
+      "x": 0,
+      "linkedin": 0,
+      "threads": 0
+    },
+    "diasA": [
+      5
+    ],
+    "detalle": true,
+    "hashtags": "#hacking #ciberseguridad #ctf",
+    "hashtagsTema": true,
+    "hashtagMaquina": true,
+    "youtubeTipo": "SHORT",
+    "youtubeCategoria": "SCIENCE_TECHNOLOGY",
+    "contenidoIA": false,
+    "primeraHoy": null
+  },
+  "estancados": [],
+  "lotes": [
+    {
+      "id": "2026-11-10T19-22-47-971Z",
+      "creado": "2026-11-10T19:22:47.973Z",
+      "archivo": "/Users/ericks/Documents/vsc/ajolo-publicador/metricool/csv/metricool-salida-2026-11-10_a_2026-11-16-19-22-47.csv",
+      "config": {
+        "porDia": 3,
+        "horas": {
+          "instagram": [
+            "12:00",
+            "18:00",
+            "21:00"
+          ],
+          "tiktok": [
+            "13:00",
+            "19:00",
+            "22:00"
+          ],
+          "youtube": [
+            "14:00",
+            "17:00",
+            "20:00"
+          ],
+          "x": [
+            "09:00",
+            "12:00",
+            "18:00"
+          ],
+          "linkedin": [
+            "08:30",
+            "12:30",
+            "17:00"
+          ],
+          "facebook": [
+            "09:00",
+            "13:00",
+            "19:00"
+          ],
+          "threads": [
+            "10:00",
+            "14:00",
+            "20:00"
+          ]
+        },
+        "redes": {
+          "instagram": 1,
+          "facebook": 1,
+          "youtube": 2,
+          "tiktok": 2,
+          "x": 0,
+          "linkedin": 0,
+          "threads": 0
+        },
+        "diasA": [
+          5
+        ],
+        "youtubeTipo": "SHORT",
+        "contenidoIA": false
+      },
+      "items": [
+        {
+          "fecha": "2026-11-10",
+          "hora": "16:30",
+          "key": "allien-facil",
+          "version": "B",
+          "redes": [
+            "youtube",
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-10",
+          "hora": "16:30",
+          "key": "borazuwarahctf-muy-facil",
+          "version": "B",
+          "redes": [
+            "instagram",
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-10",
+          "hora": "19:30",
+          "key": "amor-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-10",
+          "hora": "19:00",
+          "key": "firsthacking-muy-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-10",
+          "hora": "22:00",
+          "key": "anonymouspingu-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-10",
+          "hora": "19:00",
+          "key": "firsthacking-muy-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-10",
+          "hora": "19:30",
+          "key": "amor-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-10",
+          "hora": "21:00",
+          "key": "upload-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-10",
+          "hora": "21:00",
+          "key": "upload-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-10",
+          "hora": "22:00",
+          "key": "anonymouspingu-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "09:00",
+          "key": "allien-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "12:00",
+          "key": "allien-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "13:00",
+          "key": "amor-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "13:00",
+          "key": "borazuwarahctf-muy-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "14:00",
+          "key": "borazuwarahctf-muy-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "17:00",
+          "key": "firsthacking-muy-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "18:00",
+          "key": "amor-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "19:00",
+          "key": "anonymouspingu-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "19:00",
+          "key": "firsthacking-muy-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "20:00",
+          "key": "upload-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "21:00",
+          "key": "anonymouspingu-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-11",
+          "hora": "22:00",
+          "key": "upload-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "09:00",
+          "key": "backend-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "12:00",
+          "key": "backend-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "13:00",
+          "key": "bicho-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "13:00",
+          "key": "breakmyssh-muy-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "14:00",
+          "key": "breakmyssh-muy-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "17:00",
+          "key": "consolelog-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "18:00",
+          "key": "bicho-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "19:00",
+          "key": "bigpivoting-dificil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "19:00",
+          "key": "consolelog-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "20:00",
+          "key": "doubletrouble-dificil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "21:00",
+          "key": "bigpivoting-dificil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-12",
+          "hora": "22:00",
+          "key": "doubletrouble-dificil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "09:00",
+          "key": "breakmyssh-muy-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "12:00",
+          "key": "breakmyssh-muy-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "13:00",
+          "key": "backend-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "13:00",
+          "key": "consolelog-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "14:00",
+          "key": "backend-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "17:00",
+          "key": "bicho-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "18:00",
+          "key": "consolelog-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "19:00",
+          "key": "bicho-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "19:00",
+          "key": "doubletrouble-dificil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "20:00",
+          "key": "bigpivoting-dificil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "21:00",
+          "key": "doubletrouble-dificil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-13",
+          "hora": "22:00",
+          "key": "bigpivoting-dificil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "09:00",
+          "key": "hedgehog-muy-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "12:00",
+          "key": "hedgehog-muy-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "13:00",
+          "key": "insanity-dificil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "13:00",
+          "key": "pinguinazo-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "14:00",
+          "key": "pinguinazo-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "17:00",
+          "key": "pntopntobarra-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "18:00",
+          "key": "insanity-dificil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "19:00",
+          "key": "patriaquerida-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "19:00",
+          "key": "pntopntobarra-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "20:00",
+          "key": "psycho-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "21:00",
+          "key": "patriaquerida-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-14",
+          "hora": "22:00",
+          "key": "psycho-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "09:00",
+          "key": "pinguinazo-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "12:00",
+          "key": "pinguinazo-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "13:00",
+          "key": "hedgehog-muy-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "13:00",
+          "key": "pntopntobarra-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "14:00",
+          "key": "hedgehog-muy-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "17:00",
+          "key": "insanity-dificil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "18:00",
+          "key": "pntopntobarra-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "19:00",
+          "key": "insanity-dificil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "19:00",
+          "key": "psycho-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "20:00",
+          "key": "patriaquerida-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "21:00",
+          "key": "psycho-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-15",
+          "hora": "22:00",
+          "key": "patriaquerida-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "09:00",
+          "key": "whoiam-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "12:00",
+          "key": "whoiam-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "13:00",
+          "key": "aguademayo-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "13:00",
+          "key": "apibase-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "14:00",
+          "key": "apibase-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "17:00",
+          "key": "balulero-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "18:00",
+          "key": "aguademayo-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "19:00",
+          "key": "aidor-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "19:00",
+          "key": "balulero-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "20:00",
+          "key": "bypassme-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "21:00",
+          "key": "aidor-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-16",
+          "hora": "22:00",
+          "key": "bypassme-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10T20-19-28-483Z",
+      "creado": "2026-11-10T20:19:28.485Z",
+      "archivo": "/Users/ericks/Documents/vsc/ajolo-publicador/metricool/csv/metricool-salida-2026-11-17_a_2026-11-23-20-19-28.csv",
+      "config": {
+        "porDia": 3,
+        "horas": {
+          "instagram": [
+            "12:00",
+            "18:00",
+            "21:00"
+          ],
+          "tiktok": [
+            "13:00",
+            "19:00",
+            "22:00"
+          ],
+          "youtube": [
+            "14:00",
+            "17:00",
+            "20:00"
+          ],
+          "x": [
+            "09:00",
+            "12:00",
+            "18:00"
+          ],
+          "linkedin": [
+            "08:30",
+            "12:30",
+            "17:00"
+          ],
+          "facebook": [
+            "09:00",
+            "13:00",
+            "19:00"
+          ],
+          "threads": [
+            "10:00",
+            "14:00",
+            "20:00"
+          ]
+        },
+        "redes": {
+          "instagram": 1,
+          "facebook": 1,
+          "youtube": 2,
+          "tiktok": 2,
+          "x": 0,
+          "linkedin": 0,
+          "threads": 0
+        },
+        "diasA": [
+          5
+        ],
+        "youtubeTipo": "SHORT",
+        "contenidoIA": false
+      },
+      "items": [
+        {
+          "fecha": "2026-11-17",
+          "hora": "09:00",
+          "key": "apibase-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-17",
+          "hora": "12:00",
+          "key": "apibase-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-17",
+          "hora": "13:00",
+          "key": "balulero-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-17",
+          "hora": "13:00",
+          "key": "whoiam-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-17",
+          "hora": "14:00",
+          "key": "whoiam-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-17",
+          "hora": "17:00",
+          "key": "aguademayo-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-17",
+          "hora": "18:00",
+          "key": "balulero-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-17",
+          "hora": "19:00",
+          "key": "aguademayo-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-17",
+          "hora": "19:00",
+          "key": "bypassme-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-17",
+          "hora": "20:00",
+          "key": "aidor-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-17",
+          "hora": "21:00",
+          "key": "bypassme-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-17",
+          "hora": "22:00",
+          "key": "aidor-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "09:00",
+          "key": "candy-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "12:00",
+          "key": "candy-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "13:00",
+          "key": "chocolatelovers-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "13:00",
+          "key": "elevator-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "14:00",
+          "key": "elevator-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "17:00",
+          "key": "file-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "18:00",
+          "key": "chocolatelovers-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "19:00",
+          "key": "ejotapete-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "19:00",
+          "key": "file-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "20:00",
+          "key": "hiddencat-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "21:00",
+          "key": "ejotapete-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-18",
+          "hora": "22:00",
+          "key": "hiddencat-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "09:00",
+          "key": "elevator-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "12:00",
+          "key": "elevator-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "13:00",
+          "key": "candy-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "13:00",
+          "key": "file-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "14:00",
+          "key": "candy-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "17:00",
+          "key": "chocolatelovers-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "18:00",
+          "key": "file-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "19:00",
+          "key": "chocolatelovers-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "19:00",
+          "key": "hiddencat-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "20:00",
+          "key": "ejotapete-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "21:00",
+          "key": "hiddencat-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-19",
+          "hora": "22:00",
+          "key": "ejotapete-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "09:00",
+          "key": "library-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "12:00",
+          "key": "library-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "13:00",
+          "key": "mirame-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "13:00",
+          "key": "picadilly-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "14:00",
+          "key": "picadilly-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "17:00",
+          "key": "reflection-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "18:00",
+          "key": "mirame-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "19:00",
+          "key": "obsession-muy-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "19:00",
+          "key": "reflection-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "20:00",
+          "key": "secretjenkins-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "21:00",
+          "key": "obsession-muy-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-20",
+          "hora": "22:00",
+          "key": "secretjenkins-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "09:00",
+          "key": "picadilly-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "12:00",
+          "key": "picadilly-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "13:00",
+          "key": "library-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "13:00",
+          "key": "reflection-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "14:00",
+          "key": "library-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "17:00",
+          "key": "mirame-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "18:00",
+          "key": "reflection-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "19:00",
+          "key": "mirame-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "19:00",
+          "key": "secretjenkins-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "20:00",
+          "key": "obsession-muy-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "21:00",
+          "key": "secretjenkins-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-21",
+          "hora": "22:00",
+          "key": "obsession-muy-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "09:00",
+          "key": "showtime-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "12:00",
+          "key": "showtime-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "13:00",
+          "key": "tproot-muy-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "13:00",
+          "key": "vacaciones-muy-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "14:00",
+          "key": "vacaciones-muy-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "17:00",
+          "key": "verdejo-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "18:00",
+          "key": "tproot-muy-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "19:00",
+          "key": "trust-muy-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "19:00",
+          "key": "verdejo-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "20:00",
+          "key": "walkingcms-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "21:00",
+          "key": "trust-muy-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-22",
+          "hora": "22:00",
+          "key": "walkingcms-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "09:00",
+          "key": "vacaciones-muy-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "12:00",
+          "key": "vacaciones-muy-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "13:00",
+          "key": "showtime-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "13:00",
+          "key": "verdejo-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "14:00",
+          "key": "showtime-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "17:00",
+          "key": "tproot-muy-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "18:00",
+          "key": "verdejo-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "19:00",
+          "key": "tproot-muy-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "19:00",
+          "key": "walkingcms-facil",
+          "version": "B",
+          "redes": [
+            "facebook"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "20:00",
+          "key": "trust-muy-facil",
+          "version": "B",
+          "redes": [
+            "youtube"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "21:00",
+          "key": "walkingcms-facil",
+          "version": "B",
+          "redes": [
+            "instagram"
+          ]
+        },
+        {
+          "fecha": "2026-11-23",
+          "hora": "22:00",
+          "key": "trust-muy-facil",
+          "version": "B",
+          "redes": [
+            "tiktok"
+          ]
+        }
+      ]
+    }
+  ]
+}

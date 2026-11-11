@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subir a Drive · Ajolo Publicador</title>
+<style>
+:root{
+  --bg:#f6f5f2; --card:#ffffff; --ink:#1d1d1b; --muted:#6b6a66; --line:#e3e1dc;
+  --accent:#d6457a; --accent-ink:#fff; --ok:#1f8a4c; --warn:#b26a00; --err:#c0392b; --run:#2f6fd6;
+  --chip:#efedea; --track:#e9e7e2;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#151514; --card:#1f1f1d; --ink:#f0eee9; --muted:#a3a19b; --line:#33322f;
+  --accent:#f06a9b; --accent-ink:#1a0b11; --ok:#4cc27f; --warn:#e3a33b; --err:#ff6b5e; --run:#6aa1ff;
+  --chip:#2a2a27; --track:#2c2c29; color-scheme:dark;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 20px 80px}
+header.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
+h1{font-size:22px;margin:0;letter-spacing:-.01em}
+h1 small{display:block;font-size:13px;font-weight:400;color:var(--muted)}
+nav.tabs{display:flex;gap:4px;background:var(--chip);padding:3px;border-radius:10px}
+nav.tabs a{padding:5px 12px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14px}
+nav.tabs a.on{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 14px}
+button:hover{border-color:var(--muted)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+button:disabled{opacity:.45;cursor:default}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
+.pill{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--chip);white-space:nowrap}
+.pill.ok{color:var(--ok)} .pill.warn{color:var(--warn)} .pill.err{color:var(--err)} .pill.run{color:var(--run)}
+.hint{font-size:13px;color:var(--muted);margin:8px 0 0}
+a{color:var(--accent)}
+.bar{height:12px;background:var(--track);border-radius:999px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--ok);border-radius:999px;transition:width .6s ease}
+.bar.run>i{background:var(--run)}
+.bar.sm{height:6px}
+.big{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.big strong{font-size:28px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.big span{color:var(--muted);font-variant-numeric:tabular-nums}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:16px}
+.stat{background:var(--bg);border-radius:10px;padding:10px 12px}
+.stat b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+.stat small{color:var(--muted);font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+.filters button{font-size:13px;padding:4px 10px;border-radius:999px}
+.filters button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grp{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.grp h3{margin:0;font-size:14px;padding:10px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.grp h3 span{color:var(--muted);font-weight:400;font-size:12px;white-space:nowrap}
+.row{display:grid;grid-template-columns:20px minmax(0,1fr) auto auto 34px;gap:12px;align-items:center;padding:8px 14px;border-bottom:1px solid var(--line);font-size:14px}
+.row:last-child{border-bottom:0}
+.row .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .size{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.row .prog{grid-column:1/-1;display:flex;gap:10px;align-items:center;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.row .prog .bar{flex:1}
+.row .errtxt{grid-column:1/-1;font-size:12px;color:var(--err)}
+.chip{font-size:11px;padding:2px 8px;border-radius:999px;background:var(--chip);color:var(--muted);white-space:nowrap}
+.chip.subido{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.chip.subiendo{background:color-mix(in srgb,var(--run) 16%,transparent);color:var(--run)}
+.chip.error{background:color-mix(in srgb,var(--err) 16%,transparent);color:var(--err)}
+.row input,.grp h3 input{width:16px;height:16px;margin:0;accent-color:var(--accent)}
+.grp h3 label{display:flex;gap:10px;align-items:center;cursor:pointer}
+button.del{padding:3px 0;width:30px;border-color:transparent;background:transparent;color:var(--muted);font-size:15px}
+button.del:hover{color:var(--err);border-color:var(--err)}
+button.danger{color:var(--err);border-color:color-mix(in srgb,var(--err) 50%,var(--line))}
+.selbar{position:sticky;bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-top:12px;box-shadow:0 4px 18px rgba(0,0,0,.12)}
+.selbar[hidden]{display:none}
+.selbar .hint{margin:0;flex:1}
+.fuente{display:flex;gap:8px;align-items:center;margin:0 0 12px;font-size:14px;color:var(--muted)}
+.fuente select{font:inherit;padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Ajolo Publicador<small>Copia de iCloud a Google Drive</small></h1>
+    <nav class="tabs"><a href="/">Publicar en redes</a><a href="/drive" class="on">Subir a Drive</a><a href="/metricool">Programar A/B</a></nav>
+  </header>
+
+  <div class="fuente">Carpeta: <select id="fuente"></select></div>
+  <section class="panel" id="conn"></section>
+  <section class="panel" id="resumen" hidden></section>
+  <div id="filtros" class="filters" hidden></div>
+  <main id="lista"></main>
+  <div id="selbar" class="selbar" hidden></div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const h = (tag, attrs={}, ...kids) => { const e=document.createElement(tag); for (const [k,v] of Object.entries(attrs)) { if (k==='class') e.className=v; else if (k==='style') e.style.cssText=v; else if (k.startsWith('on')) e.addEventListener(k.slice(2),v); else if (v!==false && v!=null) e.setAttribute(k, v===true?'':v); } for (const k of kids.flat()) if (k!=null && k!==false) e.append(k.nodeType?k:document.createTextNode(k)); return e; };
+const post = async url => { const r = await fetch(url,{method:'POST'}); const j = await r.json().catch(()=>({})); if (!r.ok) throw new Error(j.error||r.statusText); return j; };
+const fmtB = b => { if (b==null) return '—'; const u=['B','KB','MB','GB','TB']; let i=0; while (b>=1000 && i<u.length-1){b/=1000;i++;} return (i<2?Math.round(b):b.toFixed(b<10?2:1))+' '+u[i]; };
+const fmtT = s => { if (s==null || !isFinite(s)) return '—'; s=Math.round(s); if (s<60) return s+' s'; const m=Math.round(s/60); if (m<60) return m+' min'; return Math.floor(m/60)+' h '+(m%60)+' min'; };
+const hora = t => new Date(t).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+const NOMBRE = {subido:'Subido', subiendo:'Subiendo', pendiente:'Pendiente', error:'Error'};
+
+const qs = new URLSearchParams(location.search);
+let fuente = qs.get('fuente') || (()=>{ try { return localStorage.getItem('fuenteDrive'); } catch { return null; } })() || 'ajolo';
+const F = (u) => u + (u.includes('?') ? '&' : '?') + 'fuente=' + encodeURIComponent(fuente);
+async function cargarFuentes() {
+  const fs = await (await fetch('/api/drive/fuentes')).json();
+  if (!fs.some(f => f.id === fuente)) fuente = fs[0].id;
+  $('#fuente').replaceChildren(...fs.map(f => h('option',{value:f.id, selected: f.id===fuente}, f.nombre + (f.existe?'':' (no existe)') + (f.subiendo?' · subiendo':''))));
+}
+let filtro = 'todos', E = null, timer = null, ocupado = false, borrando = false;
+const sel = new Set();                                    // rutas marcadas para eliminar
+const enDrive = a => a.estado === 'subido' || a.distinto;  // existe en Drive
+
+async function eliminar(rutas) {
+  if (!rutas.length || borrando) return;
+  const peso = E.archivos.filter(a => rutas.includes(a.path)).reduce((s,a)=>s+a.size,0);
+  const que = rutas.length === 1 ? `"${rutas[0].split('/').pop()}"` : `${rutas.length} archivos (${fmtB(peso)})`;
+  if (!confirm(`¿Eliminar ${que} de Google Drive?\n\nSe mandan a la papelera de Drive (puedes recuperarlos ahí durante 30 días). Los originales de iCloud no se tocan.`)) return;
+  borrando = true; pintar();
+  try {
+    const r = await fetch(F('/api/drive/eliminar'), { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ rutas }) });
+    const j = await r.json().catch(()=>({}));
+    if (!r.ok) throw new Error(j.error || r.statusText);
+    rutas.forEach(x => sel.delete(x));
+    if (j.fallos?.length) alert(`Se eliminaron ${j.eliminados}. No se pudieron eliminar ${j.fallos.length}:\n` + j.fallos.map(f => '• ' + f.path + ': ' + f.error).join('\n'));
+  } catch (e) { alert('No se pudo eliminar: ' + e.message); }
+  borrando = false; cargar();
+}
+
+async function cargar() {
+  try {
+    const f0 = fuente, e = await (await fetch(F('/api/drive/estado'))).json();
+    if (f0 !== fuente) return;   // cambió de carpeta mientras cargaba
+    E = e; pintar();
+  } catch (e) {
+    $('#conn').replaceChildren(h('strong',{},'No se pudo leer el estado: '), e.message);
+  }
+  clearTimeout(timer);
+  timer = setTimeout(cargar, E && (E.corriendo || E.conexion.estado==='conectando' || E.revisando) ? 1000 : 8000);
+}
+const accion = (url) => async () => { if (ocupado) return; ocupado = true; try { await post(F(url)); } catch(e){ alertar(e.message); } ocupado = false; cargar(); };
+function alertar(m){ $('#conn').append(h('p',{class:'hint', style:'color:var(--err)'}, m)); }
+
+function pintar() {
+  // ----- conexión -----
+  const c = E.conexion, conn = $('#conn');
+  const pill = { conectado:['ok','Google Drive conectado'], conectando:['run','Esperando autorización…'], desconectado:['warn','Google Drive sin conectar'], error:['err','Error de conexión'], desconocido:['warn','Revisando…'] }[c.estado] || ['warn', c.estado];
+  conn.replaceChildren(
+    h('div',{style:'display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap'},
+      h('div',{}, h('span',{class:'pill '+pill[0]}, pill[1]), c.estado==='conectado' ? h('span',{class:'hint', style:'margin-left:10px'}, 'Destino: ', h('strong',{}, E.destino)) : null),
+      c.estado==='desconectado' || c.estado==='error' ? h('button',{class:'primary', onclick:accion('/api/drive/conectar')}, 'Conectar Google Drive') : null),
+    c.estado==='desconectado' ? h('p',{class:'hint'}, 'Se abrirá tu navegador para que elijas tu cuenta de Google y pulses "Permitir". El acceso es limitado: la app solo puede ver los archivos que ella misma sube, no el resto de tu Drive.') : null,
+    c.estado==='conectando' ? h('p',{class:'hint'}, 'Se abrió una pestaña de Google en tu navegador. Elige tu cuenta y pulsa "Permitir". ', c.url ? ['¿No se abrió? ', h('a',{href:c.url, target:'_blank'}, 'Abre este enlace'), '.'] : null) : null,
+    c.estado==='error' ? h('p',{class:'hint', style:'color:var(--err)'}, c.error || '') : null,
+    E.errorRemoto ? h('p',{class:'hint', style:'color:var(--err)'}, 'No se pudo revisar Drive: ' + E.errorRemoto) : null,
+  );
+
+  const listo = c.estado==='conectado';
+  $('#resumen').hidden = $('#filtros').hidden = false;
+
+  // ----- resumen -----
+  const t = E.totales, pct = t.bytes ? Math.round(t.hechos / t.bytes * 1000) / 10 : 0;
+  const run = E.run;
+  const etaTxt = E.etaFuente==='listo' ? 'Todo subido'
+    : E.eta==null ? (E.corriendo ? 'Calculando…' : 'Se calcula al empezar')
+    : '~' + fmtT(E.eta) + (E.etaFuente==='anterior' ? ' (estimado)' : '');
+  $('#resumen').replaceChildren(
+    h('div',{class:'big'}, h('strong',{}, pct.toFixed(pct%1?1:0) + '%'), h('span',{}, `${fmtB(t.hechos)} de ${fmtB(t.bytes)}`)),
+    h('div',{class:'bar' + (E.corriendo?' run':'')}, h('i',{style:`width:${pct}%`})),
+    h('div',{class:'stats'},
+      h('div',{class:'stat'}, h('b',{}, `${t.subidos}/${t.archivos}`), h('small',{}, 'Archivos subidos')),
+      h('div',{class:'stat'}, h('b',{}, t.subiendo), h('small',{}, 'Subiendo ahora')),
+      h('div',{class:'stat'}, h('b',{}, t.pendientes), h('small',{}, 'Pendientes')),
+      h('div',{class:'stat'}, h('b',{style: t.errores?'color:var(--err)':''}, t.errores), h('small',{}, 'Con error')),
+      h('div',{class:'stat'}, h('b',{}, E.velocidad ? fmtB(E.velocidad)+'/s' : '—'), h('small',{}, 'Velocidad')),
+      h('div',{class:'stat'}, h('b',{style:'font-size:17px'}, etaTxt), h('small',{}, 'Tiempo restante')),
+    ),
+    h('div',{class:'actions'},
+      E.corriendo
+        ? h('button',{onclick:accion('/api/drive/detener')}, 'Detener subida')
+        : h('button',{class:'primary', disabled: !listo || (t.pendientes + t.errores)===0, onclick:accion('/api/drive/subir')},
+            t.pendientes + t.errores === 0 ? 'Todo está en Drive' : `Subir ${t.pendientes + t.errores} archivo${t.pendientes+t.errores===1?'':'s'} pendiente${t.pendientes+t.errores===1?'':'s'} (${fmtB(t.bytes - t.hechos)})`),
+      h('button',{disabled: !listo || E.corriendo || E.revisando, onclick:accion('/api/drive/revisar')}, E.revisando ? 'Revisando Drive…' : 'Volver a revisar Drive'),
+      h('span',{class:'hint', style:'margin:0'},
+        run ? (run.fin ? `Última subida: ${run.estado} a las ${hora(run.fin)} (${run.subidos} archivo${run.subidos===1?'':'s'}).` : `Subiendo desde las ${hora(run.inicio)}.`) : '',
+        E.revisadoEn ? ` Drive revisado a las ${hora(E.revisadoEn)}.` : ''),
+    ),
+    E.corriendo ? h('p',{class:'hint'}, 'Si un video no está descargado en tu Mac, iCloud lo baja primero; por eso la velocidad puede verse baja al principio. Puedes cerrar esta pestaña: la subida sigue mientras la ventana de Terminal del panel esté abierta.') : null,
+  );
+
+  // ----- selección para eliminar -----
+  const borrables = E.archivos.filter(enDrive);
+  for (const x of [...sel]) if (!borrables.some(a => a.path === x)) sel.delete(x);
+  const bloqueado = E.corriendo || borrando;
+  const pesoSel = borrables.filter(a => sel.has(a.path)).reduce((s,a)=>s+a.size,0);
+  $('#selbar').hidden = !listo || !borrables.length;
+  $('#selbar').replaceChildren(
+    h('p',{class:'hint'}, borrando ? 'Eliminando de Drive…' : E.corriendo ? 'Para eliminar, espera a que termine la subida.'
+      : sel.size ? `${sel.size} seleccionado${sel.size===1?'':'s'} · ${fmtB(pesoSel)}` : `Marca archivos para eliminarlos de Drive (${borrables.length} en Drive).`),
+    h('button',{disabled: bloqueado || sel.size===borrables.length, onclick:()=>{ borrables.forEach(a=>sel.add(a.path)); pintar(); }}, 'Seleccionar todo'),
+    sel.size ? h('button',{disabled: bloqueado, onclick:()=>{ sel.clear(); pintar(); }}, 'Quitar selección') : null,
+    h('button',{class:'danger', disabled: bloqueado || !sel.size, onclick:()=>eliminar([...sel])}, sel.size ? `Eliminar ${sel.size} de Drive` : 'Eliminar de Drive'),
+  );
+
+  // ----- filtros -----
+  const cuenta = { todos:t.archivos, pendiente:t.pendientes, subiendo:t.subiendo, subido:t.subidos, error:t.errores };
+  $('#filtros').replaceChildren(...Object.entries({todos:'Todos', pendiente:'Pendientes', subiendo:'Subiendo', subido:'Subidos', error:'Con error'})
+    .map(([k,n]) => h('button',{class: filtro===k?'on':'', onclick:()=>{filtro=k; pintar();}}, `${n} (${cuenta[k]})`)));
+
+  // ----- lista por capítulo -----
+  const grupos = new Map();
+  for (const a of E.archivos) {
+    const i = a.path.indexOf('/'); const g = i<0 ? '(carpeta principal)' : a.path.slice(0,i);
+    (grupos.get(g) || grupos.set(g, []).get(g)).push(a);
+  }
+  const lista = $('#lista'); lista.replaceChildren();
+  for (const [g, arr] of grupos) {
+    const vis = arr.filter(a => filtro==='todos' || a.estado===filtro);
+    if (!vis.length) continue;
+    const ok = arr.filter(a => a.estado==='subido').length;
+    const bytes = arr.reduce((s,a)=>s+a.size,0);
+    const enG = vis.filter(enDrive), todosG = enG.length && enG.every(a => sel.has(a.path));
+    lista.append(h('section',{class:'grp'},
+      h('h3',{}, h('label',{}, h('input',{type:'checkbox', checked: todosG, disabled: !enG.length || E.corriendo || borrando, title:'Seleccionar todo el capítulo',
+            onchange:e=>{ enG.forEach(a => e.target.checked ? sel.add(a.path) : sel.delete(a.path)); pintar(); }}), g),
+        h('span',{}, `${ok}/${arr.length} subidos · ${fmtB(bytes)}`)),
+      vis.map(a => h('div',{class:'row'},
+        h('input',{type:'checkbox', checked: sel.has(a.path), disabled: !enDrive(a) || E.corriendo || borrando, title: enDrive(a) ? 'Seleccionar' : 'No está en Drive',
+          onchange:e=>{ e.target.checked ? sel.add(a.path) : sel.delete(a.path); pintar(); }}),
+        h('div',{class:'name', title:a.path}, a.path.slice(a.path.indexOf('/')+1)),
+        h('div',{class:'size'}, fmtB(a.size)),
+        h('span',{class:'chip '+a.estado}, NOMBRE[a.estado] + (a.estado==='pendiente' && a.distinto ? ' (reemplazar)' : '')),
+        enDrive(a) ? h('button',{class:'del', title:'Eliminar de Drive', disabled: E.corriendo || borrando, onclick:()=>eliminar([a.path])}, '🗑') : h('span'),
+        a.estado==='subiendo' ? h('div',{class:'prog'},
+          h('div',{class:'bar sm run'}, h('i',{style:`width:${a.pct||0}%`})),
+          `${a.pct||0}% · ${fmtB(a.bytes)} de ${fmtB(a.size)} · ${a.speed?fmtB(a.speed)+'/s':'…'} · ${a.eta!=null?'~'+fmtT(a.eta):'…'}`) : null,
+        a.error ? h('div',{class:'errtxt'}, a.error) : null,
+      ))));
+  }
+  if (!lista.children.length) lista.append(h('div',{class:'empty'}, filtro==='todos' ? 'No hay archivos en la carpeta.' : 'Nada en esta categoría.'));
+}
+
+$('#fuente').addEventListener('change', e => {
+  fuente = e.target.value; sel.clear(); filtro = 'todos';
+  try { localStorage.setItem('fuenteDrive', fuente); } catch {}
+  history.replaceState(null, '', '/drive?fuente=' + fuente);
+  E = null; $('#lista').replaceChildren(); cargar();
+});
+cargarFuentes().then(cargar, cargar);
+</script>
+</body>
+</html>
